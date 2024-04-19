@@ -8,7 +8,7 @@ export default function App() {
   const [openedIndex, setOpen] = useState(null);
   const detailRefs = useRef([]);
 
-  const togglePopover = index => e => {
+  const togglePopover = (index) => (e) => {
     e.preventDefault();
     e.stopPropagation();
     setOpen(e.target.parentElement.open ? null : index);
@@ -31,7 +31,7 @@ export default function App() {
         {dummyData.map(({ text, context }, i) => (
           <Detail
             key={`detail${i}`}
-            ref={r => (detailRefs.current[i] = r)}
+            ref={(r) => (detailRefs.current[i] = r)}
             text={text}
             context={context}
             open={openedIndex === i}
@@ -40,7 +40,10 @@ export default function App() {
         ))}
       </div>
 
-      <ContextPortal /* 채워 넣으세요. */ />
+      <ContextPortal
+        target={detailRefs.current[openedIndex]}
+        children={<p>{dummyData[openedIndex]?.context}</p>}
+      />
     </>
   );
 }
